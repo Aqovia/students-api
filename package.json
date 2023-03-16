@@ -1,0 +1,12 @@
+{
+  "name": "front-end-exercise",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server/api"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "validate-date": "^2.0.0"
+  }
+}

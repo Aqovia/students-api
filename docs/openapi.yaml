@@ -1,0 +1,150 @@
+openapi: "3.0.1"
+servers:
+  - url: /api
+info:
+  title: "Student API"
+  description: "Student API"
+  version: "1.0.0"
+paths:
+  /students:
+    post:
+      tags:
+        - "students"
+      summary: "Add a student"
+      description: ""
+      operationId: "addStudent"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentInput"
+        description: "Student data"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+        400:
+          description: "Invalid input"
+    get:
+      tags:
+        - "students"
+      summary: "Retrieve all students"
+      description: ""
+      operationId: "getStudents"
+      responses:
+        200:
+          description: "A collection of students"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Student"
+  /students/{id}:
+    get:
+      tags:
+        - "students"
+      summary: "Retrieve a student"
+      description: ""
+      operationId: "getStudentById"
+      parameters:
+        - name: id
+          in: path
+          description: "Student ID"
+          required: true
+          schema:
+            description: ""
+            title: ""
+            type: "string"
+      responses:
+        200:
+          description: "Student"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+        404:
+          description: "Not found"
+    put:
+      tags:
+        - "students"
+      summary: "Update a student"
+      description: ""
+      operationId: "updateStudentById"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentInput"
+        description: "Updated student data"
+      parameters:
+        - name: id
+          in: path
+          description: "Student ID"
+          required: true
+          schema:
+            description: ""
+            title: ""
+            type: "string"
+      responses:
+        204:
+          description: "Updated"
+        400:
+          description: "Invalid input"
+        404:
+          description: "Not found"
+    delete:
+      tags:
+        - "students"
+      summary: "Delete a student"
+      description: ""
+      operationId: "deleteStudentById"
+      parameters:
+        - name: id
+          in: path
+          description: "Student ID"
+          required: true
+          schema:
+            description: ""
+            title: ""
+            type: "string"
+      responses:
+        204:
+          description: "Deleted"
+        404:
+          description: "Not found"
+components:
+  schemas:
+    Student:
+      type: "object"
+      allOf:
+        - $ref: "#/components/schemas/StudentInput"
+      properties:
+        id:
+          type: "string"
+    StudentInput:
+      type: "object"
+      required:
+        - "firstName"
+        - "lastName"
+        - "dob"
+        - "degree"
+      properties:
+        firstName:
+          type: "string"
+          minLength: 2
+          maxLength: 40
+        lastName:
+          type: "string"
+          minLength: 2
+          maxLength: 40
+        dob:
+          type: "string"
+          format: "date"
+        degree:
+          type: "string"
+          minLength: 2
+          maxLength: 40
